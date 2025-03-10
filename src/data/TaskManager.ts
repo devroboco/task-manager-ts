@@ -33,7 +33,7 @@ export class TaskManager {
 
   completeTask(taskID: number): void {
     this.tasks = this.tasks.map((task) =>
-      task.id === taskID ? { ...task, isCompleted: true } : task
+      task.id === taskID ? { ...task, isCompleted: !task.isCompleted } : task
     );
     this.saveTasks();
   }
@@ -51,6 +51,11 @@ export class TaskManager {
     if (data) {
       try {
         this.tasks = JSON.parse(data);
+        const maxId = this.tasks.reduce(
+          (max, task) => Math.max(max, task.id),
+          0
+        );
+        this.currentId = maxId;
       } catch (error) {
         console.error("Error on load tasks:", error);
         this.tasks = [];

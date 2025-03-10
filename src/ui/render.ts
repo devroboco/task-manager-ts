@@ -24,6 +24,10 @@ export function createTaskElement(task: Tarefa): TaskElements {
   li.appendChild(name);
   li.appendChild(remove);
 
+  if (task.isCompleted) {
+    li.classList.add("completed");
+  }
+
   ul.prepend(li);
 
   return [li, completed, remove];
